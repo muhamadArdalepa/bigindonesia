@@ -1,0 +1,313 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Odc;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class OdcSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $odcs = [
+            [
+                'server_id' => 1,
+                'name' => 'ODC-201',
+                'coordinate' => '-0.010400,109.3603067',
+                'splitter' => 8,
+                'address' => 'DEPAN KANTOR',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-202',
+                'coordinate' => '-0.012900,109.360000',
+                'splitter' => 8,
+                'address' => 'SIMPANG 4 SWASEMBADA 2',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-203',
+                'coordinate' => '-0.012659,109.355114',
+                'splitter' => 8,
+                'address' => 'SIMPANG SUI SAHANG',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-204',
+                'coordinate' => '-0.012659,109.355114',
+                'splitter' => 8,
+                'address' => 'SIMPANG SUI SAHANG',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-205',
+                'coordinate' => '-0.008100,109.360600',
+                'splitter' => 8,
+                'address' => 'GG. BIMASAKTI 5 / ANYAR',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-206',
+                'coordinate' => '-0.014804,109.349021',
+                'splitter' => 8,
+                'address' => 'SELAT SUMBA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-207',
+                'coordinate' => '-0.008510,109.355601',
+                'splitter' => 8,
+                'address' => 'GG. KURNIA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-301',
+                'coordinate' => '-0.015768,109.360223',
+                'splitter' => 8,
+                'address' => 'JL. SADARAYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-302',
+                'coordinate' => '-0.001967,109.348911',
+                'splitter' => 8,
+                'address' => 'JL. PARWASAL',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-303',
+                'coordinate' => '0.000449,109.343883',
+                'splitter' => 8,
+                'address' => 'JL. DHARMAPUTRA KOMP GARDEN MAS 8',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-304',
+                'coordinate' => '-0.003856,109.356198',
+                'splitter' => 8,
+                'address' => 'GG. MAWAR',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-305',
+                'coordinate' => '-0.015163,109.364727',
+                'splitter' => 8,
+                'address' => 'JL. Selat Panjang',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-306',
+                'coordinate' => '-0.002200,109.342900',
+                'splitter' => 8,
+                'address' => 'JL. Dharma Putra',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-307',
+                'coordinate' => '-0.007600,109.346100',
+                'splitter' => 8,
+                'address' => 'JL. Parwasal',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 1,
+                'name' => 'ODC-308',
+                'coordinate' => '0.002200,109.357100',
+                'splitter' => 8,
+                'address' => 'Jl. Budi Utomo',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-201',
+                'coordinate' => '-0.121188,109.330515',
+                'splitter' => 8,
+                'address' => 'Punggur Kecil, Kec. Sungai Kakap, Kabupaten Kubu Raya, Kalimantan Barat',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-202',
+                'coordinate' => '-0.116995,109.331726',
+                'splitter' => 8,
+                'address' => 'Jl. Kayana Serdam, Punggur Kecil, Kec. Sungai Kakap, Kabupaten Kubu Raya, Kalimantan Barat',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-203',
+                'coordinate' => '-0.121358,109.330111',
+                'splitter' => 8,
+                'address' => 'Punggur Kecil, Kec. Sungai Kakap, Kabupaten Kubu Raya, Kalimantan Barat 78121',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-204',
+                'coordinate' => '-0.113371,109.330304',
+                'splitter' => 8,
+                'address' => 'Jl. Sungai Raya Dalam, Punggur Kecil, Kec. Sungai Kakap, Kabupaten Kubu Raya, Kalimantan Barat',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-205',
+                'coordinate' => '-0.1035,109.338657',
+                'splitter' => 8,
+                'address' => 'V8WQ+JF7, Punggur Kecil, Kec. Sungai Kakap, Kabupaten Kubu Raya, Kalimantan Barat',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 2,
+                'name' => 'ODC-206',
+                'coordinate' => '-0.098362,109.343847',
+                'splitter' => 8,
+                'address' => 'Gg. Nusantara No.6, Sungai Raya, Kec. Sungai Raya, Kabupaten Kubu Raya, Kalimantan Barat 78116',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-201',
+                'coordinate' => '-0.06174,109.29945',
+                'splitter' => 8,
+                'address' => 'JALAN KARYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-202',
+                'coordinate' => '-0.05902,109.2969',
+                'splitter' => 8,
+                'address' => 'JALAN KARYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-203',
+                'coordinate' => '-0.056720,109.294684',
+                'splitter' => 8,
+                'address' => 'JALAN KARYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-204',
+                'coordinate' => '-0.056605,109.289143',
+                'splitter' => 8,
+                'address' => 'DREAMLAND',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-205',
+                'coordinate' => '-0.063646,109.300458',
+                'splitter' => 8,
+                'address' => 'JALAN KARYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-206',
+                'coordinate' => '-0.067405,109.302013',
+                'splitter' => 8,
+                'address' => 'JALAN ARIKARYA 4',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-207',
+                'coordinate' => '-0.069595,109.302919',
+                'splitter' => 8,
+                'address' => 'JALAN ARIKARYA 4 BELAKANG',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-209',
+                'coordinate' => '-0.06914,109.2988',
+                'splitter' => 8,
+                'address' => 'JALAN PERDAMAIAN',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-210',
+                'coordinate' => '-0.0641,109.2968',
+                'splitter' => 8,
+                'address' => 'JALAN SWADAYA',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-211',
+                'coordinate' => '-0.07241,109.29344',
+                'splitter' => 8,
+                'address' => 'JALAN PERINTIS',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-212',
+                'coordinate' => '-0.07367,109.28767',
+                'splitter' => 8,
+                'address' => 'JALAN PERINTIS BELAKANG',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-213',
+                'coordinate' => '-0.0762,109.3019',
+                'splitter' => 8,
+                'address' => 'JALAN RAYA KALIMAS HULU',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-214',
+                'coordinate' => '-0.07834,109.29641',
+                'splitter' => 8,
+                'address' => 'JALAN RAYA KALIMAS HULU BELAKANG',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-215',
+                'coordinate' => '-0.06931,109.28811',
+                'splitter' => 8,
+                'address' => 'JALAN TUNAS HARAPAN',
+                'desc' => '',
+            ],
+            [
+                'server_id' => 3,
+                'name' => 'ODC-216',
+                'coordinate' => '-0.0663, 109.2916',
+                'splitter' => 8,
+                'address' => 'JALAN TUNAS HARAPAN',
+                'desc' => '',
+            ],
+        ];
+
+        foreach ($odcs as $odc) {
+            Odc::create($odc);
+        }
+    }
+}

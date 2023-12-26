@@ -1,0 +1,41 @@
+.alert {
+    font-size: 0.75rem;
+}
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+    height: calc(100% - 32px - 24px - 24px - 1px) !important;
+}
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+#navbar > ul.navbar-nav.justify-content-end > li.nav-item.dropdown > div {
+    top: 0.5rem !important;
+}
+.nav-item .nav-link {
+    transition: 150ms;
+}
+.navbar-vertical.bg-white .navbar-nav > .nav-item .nav-link:not(.active):hover {
+    background-color: #f6f9fc !important;
+    border-radius: 0.5rem !important;
+}
+
+table.table thead th {
+    font-weight: 700 !important;
+    font-size: 0.65rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    opacity: 0.7 !important;
+}
+.form-floating{
+    margin-bottom: 1rem;
+}

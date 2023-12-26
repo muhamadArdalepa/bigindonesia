@@ -19,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->share('currentPath', explode('/', substr_replace(request()->path(), '', 0, 0)));
     }
 }
