@@ -16,14 +16,9 @@ use Intervention\Image\Drivers\Gd\Driver;
 class Create extends Component
 {
     use WithFileUploads;
-    public $server_id;
-    public $packet_id;
+    #[Validate('required')]
     public $name;
-    public $nik;
     public $phone;
-    public $coordinate;
-    public $address;
-    public $ktp_picture;
     public $house_picture;
 
     public function submit()
