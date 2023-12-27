@@ -29,6 +29,7 @@
 
 table.table thead th {
     font-weight: 700 !important;
+    text-transform: uppercase !important;
     font-size: 0.65rem !important;
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
@@ -36,6 +37,9 @@ table.table thead th {
     padding-left: 0.5rem !important;
     opacity: 0.7 !important;
 }
-.form-floating{
+table.table tbody td {
+    font-size: 0.875rem !important;
+}
+.form-floating {
     margin-bottom: 1rem;
 }
