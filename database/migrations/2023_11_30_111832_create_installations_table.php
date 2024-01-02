@@ -24,17 +24,17 @@ return new class extends Migration
             $table->foreignId('noc_id')
                 ->nullable()
                 ->constrained('users')
-                ->onDelete('restrict')
+                ->nullOnDelete()
                 ->onUpdate('cascade');
             $table->foreignId('cs_id')
                 ->nullable()
                 ->constrained('users')
-                ->onDelete('restrict')
+                ->nullOnDelete()
                 ->onUpdate('cascade');
             $table->foreignId('team_id')
                 ->nullable()
                 ->constrained()
-                ->onDelete('restrict')
+                ->nullOnDelete()
                 ->onUpdate('cascade');
             $table->float('opm_odp')->nullable();
             $table->float('opm_user')->nullable();

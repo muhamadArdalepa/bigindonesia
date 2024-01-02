@@ -11,6 +11,7 @@ class Team extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable = ['user_id'];
     public function team_members(): HasMany
     {
         return $this->hasMany(TeamMember::class, 'team_id', 'id');

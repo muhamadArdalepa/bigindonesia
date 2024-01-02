@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TeamMember extends Model
 {
     use HasFactory;
+    protected $primaryKey = null;
 
+    public $incrementing = false;
     protected $fillable = ['team_id', 'user_id'];
 
     public $timestamps = false;

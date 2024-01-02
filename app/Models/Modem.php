@@ -10,6 +10,7 @@ class Modem extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $guarded = ['id'];
 
     public function odp(): BelongsTo
     {

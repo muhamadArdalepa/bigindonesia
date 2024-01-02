@@ -1,57 +1,65 @@
 <?php
 
-use function Livewire\Volt\{with, usesPagination, on, computed};
+use App\Models\Order;
+use function Livewire\Volt\{usesPagination, on, computed, state};
 
 usesPagination();
-$orders = computed(function () {
-    return \App\Models\Customer::latest()->paginate(5);
-});
-with(fn() => ['orders' => $this->orders]);
-on(['order-created' => fn() => ($this->orders = $this->orders)]);
 
+state(['search' => '']);
+
+$orders = computed(
+    fn () => Order::with('customer')
+        ->whereHas('customer', fn ($query) => $query->where('name', 'LIKE', "%$this->search%"))
+        ->latest()
+        ->paginate(5),
+);
+on(['order-created' => fn () => ($this->orders = $this->orders)]);
 ?>
 <x-layouts.app>
     @volt
-        <div class="card">
-            <div class="card-header">
-                <h6 class="m-0">List Penjualan</h6>
-                <a href="#Modal" class="btn btn-dark" data-bs-toggle="modal">
+    <div class="card">
+        <div class="card-header p-3 p-md-4 pb-0">
+            <h6 class="m-0">List Penjualan</h6>
+            @can('create-order')
+            <a href="#Modal" class="btn btn-dark" data-bs-toggle="modal">
+                <x-i-btn-content reverse gap="2" icon="fa-solid fa-plus">
                     Tambah Penjualan
-                </a>
-            </div>
-            <div class="card-body">
+                </x-i-btn-content>
+            </a>
+
+            <x-orders.modal />
+            @endrole
+        </div>
+        <div class="card-body p-3 p-md-4">
+            <input type="search" wire:model.live="search" class="form-control form-control-sm">
+            <div class="table-responsive" id="table">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Name</th>
+                            <th class="freeze"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orders as $order)
-                            <tr>
-                                <td>{{ $order->id }}</td>
-                                <td>{{ $order->name }}</td>
-                            </tr>
+                        @foreach ($this->orders as $order)
+                        <tr id="tr{{ $order->id }}">
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->customer->name }}</td>
+                            <td class="freeze">
+                                <a href="{{ url('orders/' . $order->id) }}" class="btn btn-sm btn-dark" wire:navigate.hover>
+                                    <x-i-btn-content icon="fa-solid fa-arrow-up-right-from-square">
+                                        Detail
+                                    </x-i-btn-content>
+                                </a>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="text-sm opacity-7">
-                        Menampilkan
-                        {{ 1 + $orders->perPage() * ($orders->currentPage() - 1) }}
-                        hingga
-                        {{$orders->currentPage() == $orders->lastPage() ? $orders->total() : ($orders->perPage() * ($orders->currentPage())) }}
-                        dari
-                        {{ $orders->total() }}
-                        entri
-                    </div>
-                    {{ $orders->links('vendor.livewire.bootstrap') }}
-                </div>
             </div>
+            {{ $this->orders->links('components.pagination') }}
         </div>
+    </div>
     @endvolt
-    @push('modal')
-        <livewire:order.modal />
-    @endpush
 </x-layouts.app>

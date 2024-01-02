@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('coordinate');
             $table->string('ktp_picture')->nullable();
+            $table->string('house_picture')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -12,6 +12,14 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
 
 <div>
     @if ($paginator->hasPages())
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="text-sm opacity-7">
+            Showing
+            {{ 1 + $paginator->perPage() * ($paginator->currentPage() - 1) }} - {{ $paginator->currentPage() == $paginator->lastPage() ? $paginator->total() : $paginator->perPage() * $paginator->currentPage() }}
+            from
+            {{ $paginator->total() }}
+            entry
+        </div>
         <nav>
             <ul class="pagination m-0">
                 {{-- Previous Page Link --}}
@@ -56,5 +64,6 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                 @endif
             </ul>
         </nav>
+    </div>
     @endif
 </div>

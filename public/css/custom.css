@@ -1,11 +1,17 @@
 .alert {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: unset !important;
+}
+.alert:not(.alert-light) {
+    color: white;
 }
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
     height: calc(100% - 32px - 24px - 24px - 1px) !important;
 }
 ::-webkit-scrollbar {
     width: 12px;
+    height: 12px;
 }
 ::-webkit-scrollbar-track {
     background-color: transparent;
@@ -26,8 +32,7 @@
     background-color: #f6f9fc !important;
     border-radius: 0.5rem !important;
 }
-
-table.table thead th {
+table.table th {
     font-weight: 700 !important;
     text-transform: uppercase !important;
     font-size: 0.65rem !important;
@@ -37,9 +42,27 @@ table.table thead th {
     padding-left: 0.5rem !important;
     opacity: 0.7 !important;
 }
-table.table tbody td {
+table.table-small th {
+    font-size: 0.75rem !important;
+    width: 0;
+    padding-right: 1.5rem !important;
+}
+table.table td {
     font-size: 0.875rem !important;
 }
-.form-floating {
+
+table .freeze {
+    background-color: white;
+    position: sticky;
+    right: 0;
+    top: auto;
+    width: 0;
+    z-index: 1 !important;
+    padding: 0.5rem 0.15rem;
+}
+.form-floating:not(.form-floating:last-child) {
     margin-bottom: 1rem;
+}
+.btn-sm {
+    padding: 0.5rem .75rem !important;
 }

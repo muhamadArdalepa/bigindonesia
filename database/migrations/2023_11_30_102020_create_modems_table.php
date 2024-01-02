@@ -20,6 +20,7 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
+            $table->integer('distance');
             $table->string('sn')->nullable();
             $table->string('ssid')->nullable();
             $table->string('password')->nullable();

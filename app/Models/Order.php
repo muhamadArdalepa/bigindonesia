@@ -17,9 +17,14 @@ class Order extends Model
 
 
     // relationship
-    public function user(): BelongsTo
+    public function marketer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'marketer_id');
+    }
+    // relationship
+    public function verifier(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'verifier_id');
     }
 
     public function customer()

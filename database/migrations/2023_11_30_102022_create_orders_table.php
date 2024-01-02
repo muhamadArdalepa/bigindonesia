@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -18,11 +19,17 @@ return new class extends Migration {
                 ->constrained('users')
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
+            $table->foreignId('verifier_id')
+                ->nullable()
+                ->constrained('users')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
             $table->foreignId('customer_id')
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
             $table->tinyInteger('status')->default(1);
+            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }

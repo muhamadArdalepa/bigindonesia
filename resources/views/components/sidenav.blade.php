@@ -1,3 +1,4 @@
+@volt
 <aside class="sidenav overflow-hidden bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -17,8 +18,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('*orders*') ? 'active' : '' }}" href="{{ url('orders') }}" wire:navigate.hover>
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-table"></i>
                     Penjualan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('*installations*') ? 'active' : '' }}" href="{{ url('installations') }}" wire:navigate.hover>
+                <i class="fa-solid fa-table"></i>
+                    Pemasangan Baru
                 </a>
             </li>
             <li class="nav-item">
@@ -27,18 +34,7 @@
                     Kelola Pengguna
                 </a>
             </li>
-
-            {{-- <li class="nav-item nav-collapse">
-                <a class="nav-link cursor-pointer {{ request()->is('*users*') ? 'active' : '' }} nav-collapse" data-bs-target="#usersCollapse" data-bs-toggle="collapse">
-                    <i class="fa-solid fa-users"></i>
-                    Pengguna
-                </a>
-                <div class="collapse {{ request()->is('*users*') ? 'show' : '' }} nav-collapse" id="usersCollapse">
-                    <ul class="navbar-nav nav-collapse d-flex ps-4 flex-column">
-
-                    </ul>
-                </div>
-            </li> --}}
         </div>
     </div>
 </aside>
+@endvolt

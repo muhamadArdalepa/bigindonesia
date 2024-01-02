@@ -10,26 +10,22 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <title>{{ (isset($title) ? $title . ' | ' : '') . 'Borneo Inovasi Gemilang' }}</title>
-
+    @stack('css')
 </head>
 
 <body class="g-sidenav-show">
-    {{-- @guest
-        {{ $slot }}
-    @endguest
-    @auth --}}
+
     <div class="min-height-300 bg-danger position-fixed top-0 w-100"></div>
     <div class="position-relative overflow-hidden d-flex vh-100 w-100">
-        <livewire:components.sidenav />
+        <x-sidenav />
         <main class="position-relative main-content overflow-auto w-100">
-            <livewire:components.topnav />
-            <div class="container-fluid mb-4">
+            <x-topnav />
+            <div class="px-2 px-md-4 mb-4">
                 {{ $slot }}
             </div>
-            <livewire:components.footer />
+            <x-footer />
         </main>
     </div>
-    {{-- @endauth --}}
 
 
     <script data-navigate-once src="{{ asset('js/before.js') }}"></script>

@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Odp;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class OdpSeeder extends Seeder
 {
@@ -48,5 +49,9 @@ class OdpSeeder extends Seeder
                 'desc' => '',
             ],
         ];
+
+        foreach($odps as $odp){
+            Odp::create($odp);
+        }
     }
 }
