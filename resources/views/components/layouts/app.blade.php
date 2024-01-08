@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="{{ asset('img/logos/big-warna.png') }}" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="{{ asset('plugins/fontawesome/css/all.min.css') }}" rel="stylesheet" />
+    @vite(['resources/css/app.css'])
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <title>{{ (isset($title) ? $title . ' | ' : '') . 'Borneo Inovasi Gemilang' }}</title>
@@ -26,8 +27,6 @@
             <x-footer />
         </main>
     </div>
-
-
     <script data-navigate-once src="{{ asset('js/before.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/app.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/custom.js') }}"></script>

@@ -64,5 +64,99 @@ table .freeze {
     margin-bottom: 1rem;
 }
 .btn-sm {
-    padding: 0.5rem .75rem !important;
+    padding: 0.5rem 0.75rem !important;
+}
+.nav-pills .nav-link {
+    background-color: transparent !important;
+}
+.nav-pills .nav-link.active {
+    background-color: white !important;
+    box-shadow: 0 0.3rem 1rem -0.5rem #0000001f !important;
+}
+
+.list-group-custom .list-group-item {
+    display: flex;
+}
+
+.list-group-custom .list-group-item * {
+    line-height: 1.625rem !important;
+}
+
+.list-group-custom .list-group-item *:last-child {
+    word-break: break-word;
+}
+
+.procedure-item {
+    display: flex;
+    border-radius: 0.75rem 0 0 0.75rem;
+    cursor: pointer;
+    transition: background-color 250ms ease-in-out;
+}
+
+.procedure-item:not(.procedure-item.active):hover {
+    background-color: #fff5;
+}
+
+.procedure-item.active {
+    background-color: white;
+}
+
+.procedure-item.done .procedure-item-icon div {
+    border-color: #2dce89 !important;
+}
+
+.procedure-item.done + .procedure-item .procedure-item-icon div:first-child {
+    border-color: #2dce89 !important;
+}
+
+.procedure-item.done .procedure-item-icon i {
+    color: #2dce89 !important;
+}
+
+.procedure-item.process .procedure-item-icon i {
+    color: #fb6340 !important;
+}
+
+.procedure-item .procedure-item-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 1rem;
+}
+
+.procedure-item .procedure-item-icon div {
+    border-left: 2px solid #8392ab !important;
+}
+
+.procedure-item .procedure-item-icon div:first-child {
+    height: 1rem;
+}
+
+.procedure-item .procedure-item-icon div:last-child {
+    flex-grow: 1;
+}
+
+.procedure-item:first-child .procedure-item-icon {
+    padding-top: 1rem;
+}
+
+.procedure-item:first-child .procedure-item-icon div:first-child,
+.procedure-item:last-child .procedure-item-icon div:last-child {
+    display: none;
+}
+
+.procedure-item:last-child .procedure-item-icon {
+    padding-bottom: 1rem;
+}
+
+.procedure-image {
+    overflow: hidden;
+    border-radius: 0.75rem !important;
+    width: 7rem;
+    height: 7rem;
+}
+.procedure-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

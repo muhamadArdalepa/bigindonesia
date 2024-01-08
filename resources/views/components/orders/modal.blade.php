@@ -52,8 +52,8 @@ rules(
     ],
 );
 $submit = function () {
+    $validated = $this->validate();
     try {
-        $validated = $this->validate();
         if ($this->ktp_picture || $this->house_picture)  $manager = new ImageManager(new Driver());
         if ($this->ktp_picture) {
             $ktp_filename = Str::random(32);

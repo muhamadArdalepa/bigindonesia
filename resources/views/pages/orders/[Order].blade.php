@@ -152,13 +152,8 @@ on([
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     @endvolt
-    @push('modal')
-        <x-lightbox />
-    @endpush
 </x-layouts.app>

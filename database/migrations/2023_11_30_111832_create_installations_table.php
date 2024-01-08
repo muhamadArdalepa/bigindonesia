@@ -36,8 +36,7 @@ return new class extends Migration
                 ->constrained()
                 ->nullOnDelete()
                 ->onUpdate('cascade');
-            $table->float('opm_odp')->nullable();
-            $table->float('opm_user')->nullable();
+            $table->enum('cable_type',['dw','precon']);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

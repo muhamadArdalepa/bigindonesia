@@ -7,32 +7,26 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('installation_procedures', function (Blueprint $table) {
+        Schema::create('installation_procedure_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('installation_id')
+            $table->foreignId('installation_procedure_id')
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->string('picture')->nullable();
             $table->string('title');
-            $table->tinyInteger('step')->default(1);
-            $table->boolean('is_done')->default(false);
-            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('installation_procedures');
+        Schema::dropIfExists('installation_procedure_details');
     }
 };

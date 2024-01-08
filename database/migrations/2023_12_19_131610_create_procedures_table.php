@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('procedures', function (Blueprint $table) {
-            $table->string('name')->primary();
+            $table->id();
+            $table->tinyInteger('type'); //['pemasangan','perbaikan','feeder']
             $table->text('procedures');
         });
     }

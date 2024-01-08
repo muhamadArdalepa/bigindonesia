@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\InstallationProcedure;
+use App\Models\InstallationProcedureDetail;
 use App\Models\Team;
 use App\Models\TeamMember;
 use App\Models\User;
@@ -15,9 +17,6 @@ state([
     'leader_id',
     'techy_ids'
 ]);
-mount(function () {
-    // dd($this->installation);
-});
 $techys = computed(
     fn () => User::select('id', 'name', 'picture')
         ->whereNot('id', $this->leader_id)
@@ -51,7 +50,6 @@ rules([
 $submit = function () {
     $this->validate();
     try {
-
         DB::beginTransaction();
         $team = Team::create([
             'user_id' => $this->leader_id,
@@ -66,6 +64,21 @@ $submit = function () {
         $this->installation->team_id = $team->id;
         $this->installation->status = 1;
         $this->installation->save();
+
+        $procedure = InstallationProcedure::create([
+            'installation_id'=> $this->installation->id,
+            'step' => 1
+        ]);
+
+
+        InstallationProcedureDetail::create([
+            'installation_procedure_id' => $procedure->id,
+            'title' => 'Foto SN modem'
+        ]);
+        InstallationProcedureDetail::create([
+            'installation_procedure_id' => $procedure->id,
+            'title' => 'Foto kabel'
+        ]);
         DB::commit();
         $this->dispatch('techy-assigned');
     } catch (\Throwable $th) {
@@ -90,7 +103,9 @@ $submit = function () {
                         <div class="list-group-item">
                             <div class="text-xs font-weight-bolder lh-1">Ketua</div>
                         </div>
-                        <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center" x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false" @click="hasLeader=false;$wire.leader_id=null;$dispatch('selected')">
+                        <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center"
+                            x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false"
+                            @click="hasLeader=false;$wire.leader_id=null;$dispatch('selected')">
                             <img src="https://dummyimage.com/1:1X300" class="avatar avatar-sm" alt="">
                             <div>{{ $this->leader->name }}</div>
                             <div class="ms-auto text-xs" x-show="hover">Hapus</div>
@@ -103,7 +118,9 @@ $submit = function () {
                             <div class="text-xs font-weight-bolder lh-1">Anggota</div>
                         </div>
                         @foreach ($this->members as $member)
-                        <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center" x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false" @click="$wire.member_ids=$wire.member_ids.filter(id => id != {{ $member->id }});$dispatch('selected')">
+                        <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center"
+                            x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false"
+                            @click="$wire.member_ids=$wire.member_ids.filter(id => id != {{ $member->id }});$dispatch('selected')">
                             <img src="https://dummyimage.com/1:1X300" class="avatar avatar-sm" alt="">
                             <div>{{ $member->name }}</div>
                             <div class="ms-auto text-xs" x-show="hover">Hapus</div>
@@ -114,7 +131,8 @@ $submit = function () {
                     @endif
                     <div class="">
 
-                        <input type="search" wire:model.live.debounce="search" class="form-control @if($errors->any()) is-invalid @endif" placeholder="Cari Teknisi" />
+                        <input type="search" wire:model.live.debounce="search"
+                            class="form-control @if($errors->any()) is-invalid @endif" placeholder="Cari Teknisi" />
                         <div class="invalid-feedback ps-2 text-xs">
                             @foreach ($errors->all() as $error)
                             <div class="">{{$error}}</div>
@@ -123,7 +141,8 @@ $submit = function () {
                     </div>
                     <div class="list-group">
                         @foreach ($this->techys as $techy)
-                        <div class="list-group-item list-group-item-action cursor-pointer align-items-center gap-2" @mouseover="hover=true" @mouseout="hover=false" @click="if(!hasLeader){
+                        <div class="list-group-item list-group-item-action cursor-pointer align-items-center gap-2"
+                            @mouseover="hover=true" @mouseout="hover=false" @click="if(!hasLeader){
                                         hasLeader=true;
                                         $wire.leader_id={{ $techy->id }};
                                     }else{
@@ -134,7 +153,8 @@ $submit = function () {
                                     }">
                             <img src="" class="avatar avatar-sm" alt="">
                             <div class="">{{ $techy->name }}</div>
-                            <div class="ms-auto text-xs" x-show="hover" x-text="!hasLeader ? 'Pilih Ketua' : 'Pilih Anggota'"></div>
+                            <div class="ms-auto text-xs" x-show="hover"
+                                x-text="!hasLeader ? 'Pilih Ketua' : 'Pilih Anggota'"></div>
                         </div>
                         @endforeach
                     </div>
