@@ -28,12 +28,13 @@ $save = function () {
     $this->data->user_id = auth()->user()->id;
     $this->data->save();
     $this->picture = '';
+    $this->dispatch('picture-added');
 };
 
 ?>
 <div>
     @volt
-    <div class="d-flex align-items-end gap-3">
+    <div class="d-flex flex-column flex-md-row gap-3">
         <input type="file" class="d-none" accept="image/*" capture="environment" wire:model.change="picture" x-ref="picture">
         @if (!$data->picture && !$picture)
         <div @click="$refs.picture.click()" style="width: 7rem; height: 7rem;"
@@ -42,10 +43,10 @@ $save = function () {
             <span class="text-xs text-center">{{$data->title}}</span>
         </div>
         @else
-        <div class="procedure-image"
+        <div :style="{height: $el.offsetWidth + 'px'}" class="procedure-image"
             @click="$dispatch('lightbox', '{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}')">
             <img wire:loading.remove wire:target="picture" src="{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}">
-            <div wire:loading wire:target="picture" class="h-100 d-flex align-items-center justify-content-center">
+            <div wire:loading.important wire:target="picture" class="h-100 d-flex align-items-center justify-content-center">
                 <div class="spinner-border" role="status"></div>
             </div>
         </div>

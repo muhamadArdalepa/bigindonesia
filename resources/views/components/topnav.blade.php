@@ -23,22 +23,18 @@ $logout = function () {
                         </div>
                     </span>
                 </li>
-                <li class="nav-item align-self-center d-none d-sm-block">
-                    <span class="text-white me-2">{{ auth()->user()->name }}</span>
-                </li>
-
                 <li class="nav-item dropdown">
                     <a href="javascript:;" class="nav-link text-white p-0" data-bs-toggle="dropdown">
-                        <img src="https://dummyimage.com/1:1x1080/" class="avatar avatar-sm foto_profil" alt="foto profil">
+                        <img src="{{asset(auth()->user()->picture)}}" class="avatar avatar-sm foto_profil" alt="foto profil">
                     </a>
                     <div class="dropdown-menu d-none dropdown-menu-end">
                         <a class="dropdown-item" href="{{ url('profile') }}" wire:navigate.hover>
                             <div class="d-flex py-1">
                                 <div class="my-auto">
-                                    <img src="https://dummyimage.com/1:1x1080/" class="avatar avatar-sm  me-3 ">
+                                    <img src="{{asset(auth()->user()->picture)}}" class="avatar avatar-sm  me-3 ">
                                 </div>
                                 <h6 class="text-sm font-weight-normal align-self-center m-0">
-                                    Lihat Profil
+                                    {{auth()->user()->name}}
                                 </h6>
                             </div>
                         </a>

@@ -23,7 +23,7 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
             $table->string('phone');
-            $table->string('picture')->default('profile/dummy.png');
+            $table->string('picture')->default('picture/profile/dummy.avif');
             $table->timestamps();
             $table->softDeletes();
         });

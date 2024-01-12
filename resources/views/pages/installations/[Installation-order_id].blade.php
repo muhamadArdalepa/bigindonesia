@@ -125,7 +125,7 @@ on([
                 </div>
                 @if ($installation->has('procedures'))
                     <div x-show="active==1">
-                        <livewire:installations.procedure :procedures="$installation->procedures" />
+                        <livewire:installations.procedure :id="$installation->id" />
                     </div>
                 @endif
             </div>

@@ -23,7 +23,7 @@
     }
 </style>
 @endpush
-<div class="lightbox" x-data="{lightboxOpen: false, imgSrc: ''}" x-show="lightboxOpen" x-transition @lightbox.window="lightboxOpen = true; imgSrc = $event.detail;">
+<div class="lightbox" x-cloak x-data="{lightboxOpen: false, imgSrc: ''}" x-show="lightboxOpen" x-transition @lightbox.window="lightboxOpen = true; imgSrc = $event.detail;">
     <div class="lightbox-container">
         <img :src="imgSrc" @click.away="lightboxOpen = false">
     </div>

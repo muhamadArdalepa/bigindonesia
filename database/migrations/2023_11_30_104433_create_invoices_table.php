@@ -20,6 +20,7 @@ return new class extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
             $table->double('total');
+            $table->tinyInteger('type');
             $table->tinyInteger('status');
             $table->string('ket');
             $table->date('due_date');

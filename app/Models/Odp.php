@@ -15,7 +15,7 @@ class Odp extends Model
         return $this->belongsTo(Odc::class);
     }
 
-    public function modem()
+    public function modems()
     {
         return $this->hasMany(Modem::class);
     }

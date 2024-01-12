@@ -47,8 +47,8 @@ rules(
         'phone' => 'required|min:11|max:15',
         'coordinate' => ['required', 'regex:/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/', 'max:255'],
         'address' => 'required|max:255',
-        'ktp_picture' => 'nullable|image|mimes:jpg,png,jpeg,bmp',
-        'house_picture' => 'nullable|image|mimes:jpg,png,jpeg,bmp',
+        'ktp_picture' => 'required|image|mimes:jpg,png,jpeg,bmp',
+        'house_picture' => 'required|image|mimes:jpg,png,jpeg,bmp',
     ],
 );
 $submit = function () {
@@ -188,17 +188,33 @@ $submit = function () {
                             @enderror
                         </div>
                     </div>
-                    @if ($ktp_picture)
-                    <img src="{{ $ktp_picture->temporaryUrl() }}" class="w-100 rounded-3">
-                    @endif
+
+                    <div class="d-flex gap-3">
+                        <div class="w-100">
+                            <label for="">Foto KTP</label>
+                            <input type="file" class="d-none" wire:model="ktp_picture" x-ref="ktp_picture">
+                            <div class="rounded-3 border overflow-hidden d-flex flex-column align-items-center justify-content-center" style="height: 10rem" @click="$refs.ktp_picture.click()">
+                                <div wire:loading.flex wire:target="ktp_picture" class="justify-content-center align-items-center h-100">
+                                    <div class="spinner-border"></div>
+                                </div>
+                                @if ($ktp_picture)
+                                <img @click="$dispatch('lightbox','{{ $ktp_picture->temporaryUrl() }}')" src="{{ $ktp_picture->temporaryUrl() }}" style="height: 100%;width: 100%;object-fit: cover">
+                                @else
+                                <span wire:loading.remove wire:target="ktp_picture"><i class="fa-solid fa-image fa-lg"></i></span>
+                                @endif
+                            </div>
+                            <div class="invalid-feedback ps-2 text-xs">
+                                @error('ktp_picture')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating" style="height: 12rem">
+                        <label for="ktp_picture">Foto KTP</label>
+                    </div>
                     <div class="form-floating has-validation">
                         <input type="file" id="ktp_picture" class="form-control form-control-file @error('ktp_picture') is-invalid @enderror" wire:model="ktp_picture" placeholder="Foto KTP">
-                        <label for="ktp_picture">Foto KTP</label>
-                        <div class="invalid-feedback ps-2 text-xs">
-                            @error('ktp_picture')
-                            {{ $message }}
-                            @enderror
-                        </div>
                     </div>
                     @if ($house_picture)
                     <img src="{{ $house_picture->temporaryUrl() }}" class="w-100 rounded-3">
@@ -234,5 +250,8 @@ $submit = function () {
         })
     </script>
     @endscript
+    @push('modal')
+        <x-lightbox/>
+    @endpush
     @endvolt
 </div>
