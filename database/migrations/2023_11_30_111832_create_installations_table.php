@@ -38,6 +38,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->enum('cable_type',['dw','precon']);
             $table->tinyInteger('status')->default(0);
+            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }

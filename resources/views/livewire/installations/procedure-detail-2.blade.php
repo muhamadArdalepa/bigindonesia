@@ -18,7 +18,7 @@ state([
         ->pluck('port')
         ->toArray(),
     'm_port' => fn() => $this->procedure->installation->order->customer->modem->port,
-    'desc',
+    'desc'=> fn() => $this->procedure->desc,
     'isFilled' => fn() => $this->fisik->picture && $this->port->picture && $this->output->picture,
 ]);
 on([
@@ -72,7 +72,7 @@ $save = function () {
         $this->dispatch('procedure-updated');
     } catch (\Throwable $th) {
         DB::rollBack();
-        dd($th);
+        $this->dispatch('procedure-fails');
     }
 };
 

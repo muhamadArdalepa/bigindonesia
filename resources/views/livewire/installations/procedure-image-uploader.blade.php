@@ -10,13 +10,15 @@ usesFileUploads();
 
 state([
     'data' => fn() => $this->data,
-    'picture'
+    'picture',
 ]);
 
-// rules
 $save = function () {
-    if ($this->data->picture) Storage::disk('private')->delete($this->data->picture);
-    $filename = 'installations/'.$this->data->title.'/'.Str::random(1).'/'. Str::random(32).'.jpeg';
+    $this->validate(['picture' => 'required|image']);
+    if ($this->data->picture) {
+        Storage::disk('private')->delete($this->data->picture);
+    }
+    $filename = 'installations/' . Str::kebab($this->data->title) . '/' . Str::random(1) . '/' . Str::random(32) . '.jpeg';
     $manager = new ImageManager(new Driver());
     $encoded = $manager
         ->read($this->picture)
@@ -30,51 +32,56 @@ $save = function () {
     $this->picture = '';
     $this->dispatch('picture-added');
 };
-
 ?>
 <div>
     @volt
-    <div class="d-flex flex-column flex-md-row gap-3">
-        <input type="file" class="d-none" accept="image/*" capture="environment" wire:model.change="picture" x-ref="picture">
-        @if (!$data->picture && !$picture)
-        <div @click="$refs.picture.click()" style="width: 7rem; height: 7rem;"
-            class="d-flex lh-1 cursor-pointer flex-column align-items-center justify-content-center border rounded-3">
-            <span><i class="fa-solid fa-camera"></i></span>
-            <span class="text-xs text-center">{{$data->title}}</span>
-        </div>
-        @else
-        <div :style="{height: $el.offsetWidth + 'px'}" class="procedure-image"
-            @click="$dispatch('lightbox', '{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}')">
-            <img wire:loading.remove wire:target="picture" src="{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}">
-            <div wire:loading.important wire:target="picture" class="h-100 d-flex align-items-center justify-content-center">
-                <div class="spinner-border" role="status"></div>
+        <div class="d-flex flex-column flex-md-row gap-3">
+            <input type="file" class="d-none" accept="image/*" capture="environment" wire:model.change="picture"
+                x-ref="picture">
+            <div class="">
+                <div class="procedure-image border @error('picture') border-danger @enderror">
+                    <div wire:loading.flex wire:target="picture" class="h-100 align-items-center justify-content-center">
+                        <div class="spinner-border" role="status"></div>
+                    </div>
+                    @if (!$data->picture && !$picture)
+                        <div wire:loading.remove wire:target="picture" @click="$refs.picture.click()"
+                            class="d-flex cursor-pointer align-items-center h-100 justify-content-center">
+                            <span><i class="fa-solid fa-camera"></i></span>
+                        </div>
+                    @else
+                        <div class="position-absolute bottom-3 end-3">
+                            <button wire:loading.attr="disabled" wire:target="picture" class="btn btn-dark btn-sm "
+                                @click="$refs.picture.click()">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            @if ($picture)
+                                <button wire:loading.remove wire:target="picture" class="btn btn-success btn-sm"
+                                    wire:click="save">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            @endif
+                        </div>
+                        <img class="h-100 w-100" wire:loading.remove wire:target="picture"
+                            src="{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}"
+                            @click="$dispatch('lightbox', '{{ $picture ? $picture->temporaryUrl() : route('storage', $data->picture) }}')">
+                    @endif
+                </div>
+                @error('picture')
+                    <div class="text-danger ps-2 text-sm">{{ $message }}</div>
+                @enderror
             </div>
-        </div>
-        @endif
-        <div>
-            <button @click="$refs.picture.click()" class="ms-auto mb-2 btn btn-sm btn-{{ $data->picture || $picture ? 'secondary' : 'dark'}}">
-                <i class="me-1 fa-solid fa-{{ $data->picture || $picture ? 'pen-to-square' : 'plus'}}"></i>
-                {{  $data->picture || $picture ? 'Edit' : 'Tambah'}}
-            </button>
-            @if ($picture)
-            <button wire:click="save()" wire:loading.attr="disabled" class="ms-auto mb-2 btn btn-sm bg-gradient-success">
-                <i wire:loading.remove wire:target="save()" class="me-1 fa-solid fa-check"></i>
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading wire:target="save()"></span>
-                <span wire:loading.remove wire:target="save()">Simpan</span>
-                <span wire:loading wire:target="save()">Menyimpan...</span>
-            </button>
-            @endif
+            <div>
+                <div class="">{{ $data->title }}</div>
+                <div class="text-sm font-weight-light">
+                    <i class="fa-solid fa-calendar me-1"></i>
+                    {{ $data->updated_at == $data->created_at ? '-' : $data->updated_at->translatedFormat('l, j F Y | H:i') }}
+                </div>
+                <div class="text-sm font-weight-light">
+                    <i class="fa-solid fa-user me-1"></i>
+                    {{ $data->user->name ?? '-' }}
+                </div>
+            </div>
 
-            <div class="">{{$data->title}}</div>
-            <div class="text-sm font-weight-light">
-                <i class="fa-solid fa-calendar me-1"></i>
-                {{ $data->updated_at == $data->created_at? '-': $data->updated_at->translatedFormat('l, j F Y | H:i') }}
-            </div>
-            <div class="text-sm font-weight-light">
-                <i class="fa-solid fa-user me-1"></i>
-                {{ $data->user->name ?? '-' }}
-            </div>
         </div>
-    </div>
     @endvolt
 </div>

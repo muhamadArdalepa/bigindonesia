@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->nullable();
             $table->string('nik')->nullable();
+            $table->string('number',5)->nullable();
             $table->foreignId('region_id')
                 ->constrained()
                 ->onDelete('restrict')

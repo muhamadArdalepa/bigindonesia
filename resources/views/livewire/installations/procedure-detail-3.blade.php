@@ -15,7 +15,7 @@ state([
     'kabel' => fn() => $this->procedure->details[3],
     'ssid' => fn() => $this->procedure->installation->order->customer->modem->ssid,
     'password' => fn() => $this->procedure->installation->order->customer->modem->password,
-    'desc',
+    'desc'=> fn() => $this->procedure->desc,
     'isFilled' => fn() => $this->rumah->picture && $this->modem->picture && $this->opm->picture && ($this->procedure->installation->cable_type == 'dw' ? $this->kabel->picture : true),
 ]);
 on([
@@ -64,7 +64,7 @@ $save = function () {
         $this->dispatch('procedure-updated');
     } catch (\Throwable $th) {
         DB::rollBack();
-        dd($th);
+        $this->dispatch('procedure-fails');
     }
 };
 

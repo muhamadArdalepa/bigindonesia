@@ -67,6 +67,7 @@ $submit = function () {
 
         $procedure = InstallationProcedure::create([
             'installation_id'=> $this->installation->id,
+            'title' => 'Persiapan',
             'step' => 1
         ]);
 
@@ -88,6 +89,13 @@ $submit = function () {
 };
 
 ?>
+@push('css')
+    <style>
+        #assignModal .list-group-item{
+            display: flex;
+        }
+    </style>
+@endpush
 <div wire:ignore.self class="modal fade" id="assignModal" tabindex="-1" @hide-bs-modal.dot="$wire.$refresh()">
     @volt
     <div class="modal-dialog modal-dialog-scrollable">
@@ -106,7 +114,7 @@ $submit = function () {
                         <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center"
                             x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false"
                             @click="hasLeader=false;$wire.leader_id=null;$dispatch('selected')">
-                            <img src="https://dummyimage.com/1:1X300" class="avatar avatar-sm" alt="">
+                            <img src="{{asset($this->leader->picture)}}" class="avatar avatar-sm" alt="">
                             <div>{{ $this->leader->name }}</div>
                             <div class="ms-auto text-xs" x-show="hover">Hapus</div>
                         </div>
@@ -121,7 +129,7 @@ $submit = function () {
                         <div class="list-group-item list-group-item-action cursor-pointer gap-2 align-items-center"
                             x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover=false"
                             @click="$wire.member_ids=$wire.member_ids.filter(id => id != {{ $member->id }});$dispatch('selected')">
-                            <img src="https://dummyimage.com/1:1X300" class="avatar avatar-sm" alt="">
+                            <img src="{{asset($member->picture)}}" class="avatar avatar-sm" alt="">
                             <div>{{ $member->name }}</div>
                             <div class="ms-auto text-xs" x-show="hover">Hapus</div>
                         </div>
@@ -151,7 +159,7 @@ $submit = function () {
                                     $dispatch('selected')" x-data="{
                                         hover: false,
                                     }">
-                            <img src="" class="avatar avatar-sm" alt="">
+                            <img src="{{asset($techy->picture)}}" class="avatar avatar-sm" alt="">
                             <div class="">{{ $techy->name }}</div>
                             <div class="ms-auto text-xs" x-show="hover"
                                 x-text="!hasLeader ? 'Pilih Ketua' : 'Pilih Anggota'"></div>

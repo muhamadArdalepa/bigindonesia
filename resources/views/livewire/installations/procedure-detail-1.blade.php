@@ -11,7 +11,7 @@ state([
     'modem' => fn() => $this->procedure->details[0],
     'cable' => fn() => $this->procedure->details[1],
     'sn' => fn() => $this->procedure->installation->order->customer->modem->sn,
-    'desc',
+    'desc' => fn() => $this->procedure->desc,
     'cable_type' => fn() => $this->procedure->installation->cable_type,
     'isFilled' => fn()=>$this->modem->picture && $this->cable->picture
 ]);
@@ -42,7 +42,6 @@ $save = function () {
         $this->procedure->installation->order->customer->modem->sn = $this->sn;
         $this->procedure->installation->order->customer->modem->save();
 
-
         $this->procedure->desc = $this->desc;
         
         if (!$this->procedure->is_done) {
@@ -71,7 +70,7 @@ $save = function () {
         $this->dispatch('procedure-updated');
     } catch (\Throwable $th) {
         DB::rollBack();
-        dd($th);
+        $this->dispatch('procedure-fails');
     }
 }
 

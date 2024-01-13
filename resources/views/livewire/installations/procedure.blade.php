@@ -60,7 +60,7 @@ on([
                     <div class="text-sm">{{ $procedure->title }}</div>
                 </div>
 
-                <div wire:loading wire:target="step" class="w-100" style="height: 20rem">
+                <div wire:loading wire:target="step" class="w-100" style="height: 30rem">
                     <div class="d-flex justify-content-center align-items-center w-100 h-100">
                         <div class="spinner-border" role="status">
                         </div>

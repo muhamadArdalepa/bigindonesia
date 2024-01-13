@@ -20,13 +20,13 @@ on([
                     </h6>
                 </div>
             </div>
-            <div class="card-body" x-data="{ active: 1 }">
+            <div class="card-body" x-data="{ active: 0 }">
                 @if ($installation->status != 0)
-                    <nav class="nav nav-pills bg-light p-2 flex-column flex-md-row mb-3">
+                    <nav class="nav nav-pills bg-light p-2  mb-3">
                         <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''"
-                            @click="active=0;console.log(active)" x-data="{ section: 0 }">Data User</span>
+                            @click="active=0" x-data="{ section: 0 }">Data User</span>
                         <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''"
-                            @click="active=1;console.log(active)" x-data="{ section: 1 }">Proses Instalasi</span>
+                            @click="active=1" x-data="{ section: 1 }">Proses Instalasi</span>
                     </nav>
                 @endif
                 <div x-show="active==0">
@@ -92,7 +92,7 @@ on([
                                     <div class="text-xs mb-3 font-weight-bolder">Tim Pemasangan</div>
                                     <div class="d-flex gap-3 flex-column">
                                         <div class="d-flex gap-3 align-items-center">
-                                            <img src="{{ asset('storage/' . $installation->team->leader->picture) }}"
+                                            <img src="{{ asset($installation->team->leader->picture) }}"
                                                 class="avatar avatar-sm">
                                             <div>
                                                 {{ $installation->team->leader->name }}
@@ -102,7 +102,7 @@ on([
                                         @if ($installation->team->team_members)
                                             @foreach ($installation->team->team_members as $member)
                                                 <div class="d-flex gap-3 align-items-center">
-                                                    <img src="{{ asset('storage/' . $member->user->picture) }}"
+                                                    <img src="{{asset($member->user->picture)}}"
                                                         class="avatar avatar-sm">
                                                     <div>{{ $member->user->name }}</div>
                                                 </div>
@@ -123,13 +123,25 @@ on([
                         </div>
                     </div>
                 </div>
-                @if ($installation->has('procedures'))
+                @if ($installation->procedures->count() > 0)
                     <div x-show="active==1">
                         <livewire:installations.procedure :id="$installation->id" />
                     </div>
                 @endif
             </div>
         </div>
+        @push('modal')
+            <x-lightbox />
+        @endpush
+        @script
+        <script>
+            $wire.on('procedure-updated', () => {
+                Success.fire('Prosedur berhasil diupdate')
+            });
+            $wire.on('procedure-fails', () => {
+                Success.fire('Prosedur gagal diupdate')
+            });
+        </script>
+        @endscript
     @endvolt
-    <x-lightbox />
 </x-layouts.app>

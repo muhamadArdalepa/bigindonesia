@@ -19,11 +19,11 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
-            $table->double('total');
-            $table->tinyInteger('type');
-            $table->tinyInteger('status');
-            $table->string('ket');
-            $table->date('due_date');
+            $table->tinyInteger('type')->default(1);
+            $table->double('total')->default(0);
+            $table->tinyInteger('status')->default(0);
+            $table->string('desc')->nullable();
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }

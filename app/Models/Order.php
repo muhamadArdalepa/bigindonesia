@@ -35,43 +35,4 @@ class Order extends Model
     {
         return $this->hasOne(Installation::class, 'order_id', 'id');
     }
-
-    // custom func
-    public function getBadge($key)
-    {
-        $badge = [];
-        switch ($this->status) {
-            case 0:
-                $badge = [
-                    'status' => 'Proses',
-                    'class' => 'bg-gradient-light text-dark',
-                ];
-                break;
-            case 1:
-                $badge = [
-                    'status' => 'Tercover',
-                    'class' => 'bg-gradient-success',
-                ];
-                break;
-            case 2:
-                $badge = [
-                    'status' => 'Tarik Jalur',
-                    'class' => 'bg-gradient-warning',
-                ];
-                break;
-            case 3:
-                $badge = [
-                    'status' => 'Tidak Tercover',
-                    'class' => 'bg-gradient-danger',
-                ];
-                break;
-            default:
-                $badge = [
-                    'status' => 'Proses',
-                    'class' => 'bg-gradient-light text-dark',
-                ];
-        }
-
-        return $badge[$key];
-    }
 }
