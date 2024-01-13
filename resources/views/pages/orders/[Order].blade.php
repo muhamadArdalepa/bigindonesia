@@ -123,13 +123,14 @@ on([
                                     </div>
                                     <div class="">
                                         <div class="text-sm fw-bold">{{ $invoice->status == 0 ? 'User belum bayar' : 'User sudah bayar' }}</div>
-                                        @dd($order->customer->packet)
-                                        <div class="text-sm">{{$order->customer->packet->original('price')}}</div>
+                                        <div class="text-sm">{{$order->customer->packet->price}}</div>
                                     </div>
                                 </div>
-                                <button class="btn btn-dark">
-                                    Bayar
-                                </button>
+                                 @if ($invoice->status == 0)
+                                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#payModal">
+                                        Bayar
+                                    </button>
+                                @endif
                             </div>
                         @endif
                     @endif
@@ -236,6 +237,9 @@ on([
         @push('modal')
             @if ($order->status == 0)
                 <x-orders.verif-modal :order="$order" />
+            @endif
+            @if ($invoice->status == 0)
+                <x-orders.pay-modal :invoice="$invoice" />
             @endif
             <x-lightbox />
         @endpush
