@@ -123,7 +123,6 @@ on([
                                     </div>
                                     <div class="">
                                         <div class="text-sm fw-bold">{{ $invoice->status == 0 ? 'User belum bayar' : 'User sudah bayar' }}</div>
-                                        @dd($order->customer->packet)
                                         <div class="text-sm">{{$order->customer->packet->original('price')}}</div>
                                     </div>
                                 </div>
