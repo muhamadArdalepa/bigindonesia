@@ -27,6 +27,7 @@
             <x-footer />
         </main>
     </div>
+    <script defer data-navigate-once src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <script data-navigate-once src="{{ asset('js/before.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/app.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/custom.js') }}"></script>
