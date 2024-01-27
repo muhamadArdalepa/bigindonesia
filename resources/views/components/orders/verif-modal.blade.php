@@ -54,9 +54,7 @@ $submit = function () {
                 'order_id' => $this->order->id,
             ]);
             DB::commit();
-            $this->dispatch('order-verified');
         } catch (\Throwable $th) {
-            DB::rollBack();
             $this->dispatch('verif-failed', errors: $th->getMessage());
         }
     }else{
@@ -64,6 +62,7 @@ $submit = function () {
         $this->order->status = $this->status;
         $this->order->save();
     }
+    $this->dispatch('order-verified');
 };
 
 ?>
@@ -73,7 +72,9 @@ $submit = function () {
             <div class="modal-content  overflow-visible">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Verifikasi Calon User</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <span class="p-2 cursor-pointer" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"> </i>
+                    </span>
                 </div>
                 <div class="modal-body  overflow-visible">
                     <form wire:submit.prevent="submit">
@@ -147,7 +148,7 @@ $submit = function () {
         @script
             <script>
                 $wire.on('order-verified', () => {
-                    document.querySelector('button[data-bs-dismiss="modal"]').click()
+                    document.querySelector('[data-bs-dismiss="modal"]').click()
                     Success.fire('Verifikasi Berhasil')
                 })
                 $wire.on('verification-failed', () => {

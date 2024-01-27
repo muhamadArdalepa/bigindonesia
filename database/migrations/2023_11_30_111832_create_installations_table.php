@@ -21,16 +21,6 @@ return new class extends Migration
                 ->on('orders')
                 ->onDelete('RESTRICT')
                 ->onUpdate('CASCADE');
-            $table->foreignId('noc_id')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete()
-                ->onUpdate('cascade');
-            $table->foreignId('cs_id')
-                ->nullable()
-                ->constrained('users')
-                ->nullOnDelete()
-                ->onUpdate('cascade');
             $table->foreignId('team_id')
                 ->nullable()
                 ->constrained()

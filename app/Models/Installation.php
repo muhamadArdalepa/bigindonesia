@@ -13,7 +13,7 @@ class Installation extends Model
     // relations
 
     protected $guarded = ['id'];
-
+    const POIN = 2;
 
     public function installationProcedure()
     {

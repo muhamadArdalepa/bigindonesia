@@ -117,7 +117,9 @@ $submit = function () {
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Tambah Penjualan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <span class="p-2 cursor-pointer" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"> </i>
+                    </span>
                 </div>
                 <div class="modal-body">
                     <form wire:submit.prevent="submit">
@@ -274,7 +276,7 @@ $submit = function () {
         @script
             <script>
                 $wire.on('order-created', () => {
-                    document.querySelector('button[data-bs-dismiss="modal"]').click()
+                    document.querySelector('[data-bs-dismiss="modal"]').click()
                     Success.fire('Order berhasil dibuat')
                 })
                 $wire.on('order-failed', (event) => {

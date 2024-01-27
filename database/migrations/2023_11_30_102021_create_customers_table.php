@@ -42,7 +42,8 @@ return new class extends Migration
             $table->string('coordinate');
             $table->string('ktp_picture')->nullable();
             $table->string('house_picture')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(0);
+            $table->boolean('has_report')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });

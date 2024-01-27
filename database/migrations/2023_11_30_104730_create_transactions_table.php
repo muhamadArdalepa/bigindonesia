@@ -23,7 +23,9 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
+            $table->enum('via',['Tunai','Virtual Akun']);
             $table->float('nominal');
+            $table->string('picture');
             $table->timestamps();
         });
     }

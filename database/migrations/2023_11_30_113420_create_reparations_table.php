@@ -19,10 +19,12 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
-            $table->foreignId('report_id')
-                ->constrained()
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+                $table->string('report_id');
+                $table->foreign('report_id')
+                    ->references('id')
+                    ->on('reports')
+                    ->onDelete('RESTRICT')
+                    ->onUpdate('CASCADE');
             $table->tinyInteger('status');
         });
     }

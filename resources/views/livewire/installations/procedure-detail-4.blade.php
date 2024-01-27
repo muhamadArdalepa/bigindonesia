@@ -32,20 +32,21 @@ $save = function () {
             $this->procedure->installation->save();
 
             $customer = $this->procedure->installation->order->customer;
-            $int_id = str_pad(intval(substr(Customer::where('server_id', $customer->server_id)->orderBy('id', 'desc')->first()->id, 1)) + 1, 4, "0", STR_PAD_LEFT);            
+            $latest = Customer::where('server_id', $customer->server_id)->whereNotNull('number')->first();
+            $int_id = $latest ? str_pad(intval(substr($latest->number, 1)) + 1, 4, "0", STR_PAD_LEFT) : '0001';
             $customer->number =  $customer->server->code. $int_id;
             $customer->va = str_pad($customer->server_id, 2, "0", STR_PAD_LEFT) .  $int_id;
             $customer->save();
             Invoice::create([
                 'customer_id' => $customer->id,
                 'type' => 0,
+                'total' => $customer->packet->getRawOriginal('price'),
             ]);
         }
         $this->procedure->save();
         DB::commit();
         $this->dispatch('procedure-updated');
     } catch (\Throwable $th) {
-        DB::rollBack();
         $this->dispatch('procedure-fails');
     }
 };
@@ -63,7 +64,7 @@ $save = function () {
                 </div>
                 @if ($isFilled)
                     <div class="text-end" >
-                        <button class="btn btn-dark" wire:dirty>Simpan</button>
+                        <button class="btn btn-dark" >Simpan</button>
                     </div>
                 @endif
             </form>

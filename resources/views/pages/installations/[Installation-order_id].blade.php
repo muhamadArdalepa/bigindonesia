@@ -14,38 +14,34 @@ on([
     @volt
         <div class="card">
             <div class="card-header">
-                <div class="">
-                    <h6 class="m-0">
-                        Pemasangan {{ $installation->order_id }}
-                    </h6>
-                </div>
+                <h5 class="m-0">
+                    Pemasangan {{ $installation->order_id }}
+                </h5>
             </div>
             <div class="card-body" x-data="{ active: 0 }">
                 @if ($installation->status != 0)
-                    <nav class="nav nav-pills bg-light p-2  mb-3">
-                        <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''"
-                            @click="active=0" x-data="{ section: 0 }">Data User</span>
-                        <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''"
-                            @click="active=1" x-data="{ section: 1 }">Proses Instalasi</span>
+                    <nav class="nav nav-pills bg-light p-2 mb-4">
+                        <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''" @click="active=0"
+                            x-data="{ section: 0 }">Data User</span>
+                        <span class="nav-link cursor-pointer" :class="section == active ? 'active' : ''" @click="active=1"
+                            x-data="{ section: 1 }">Proses Instalasi</span>
                     </nav>
                 @endif
                 <div x-show="active==0">
                     @if ($installation->status == 0)
-                        <div class="border rounded-3 p-3 mb-4 d-flex align-items-center">
-                            <i class="fa-solid fa-exclamation-circle text-warning me-2 lh-base"></i>
-                            <div class="">
-                                <div class="text-sm fw-bold">Belum ada teknisi ditugaskan</div>
-                            </div>
+                        <div class="border w-100 rounded-3 p-3 d-flex gap-2 flex-wrap">
+                            <div><i class="fa-solid fa-exclamation-circle text-warning me-2 lh-base"></i></div>
+                            <div class="text-sm fw-bold me-auto">Belum ada teknisi ditugaskan</div>
                             <a href="#assignModal" class="btn btn-dark ms-auto" data-bs-toggle="modal">
-                                <x-i-btn-content icon="fa-solid fa-share-from-square" gap="2">
-                                    Tugaskan Teknisi
-                                </x-i-btn-content>
+                                Ambil Pekerjaan
                             </a>
-                            <livewire:installations.assign-modal :installation="$installation">
                         </div>
+                        @push('modal')
+                            <livewire:installations.assign-modal :installation="$installation" />
+                        @endpush
                     @endif
 
-                    <div class="d-flex align-items-md-start flex-column flex-md-row gap-4">
+                    <div class="d-flex align-items-md-start flex-column flex-md-row gap-4 mt-4">
                         <div class="w-100">
                             <div class="list-group list-group-custom">
                                 <div class="list-group-item flex-column flex-md-row gap-1 gap-md-3">
@@ -102,8 +98,7 @@ on([
                                         @if ($installation->team->team_members)
                                             @foreach ($installation->team->team_members as $member)
                                                 <div class="d-flex gap-3 align-items-center">
-                                                    <img src="{{asset($member->user->picture)}}"
-                                                        class="avatar avatar-sm">
+                                                    <img src="{{ asset($member->user->picture) }}" class="avatar avatar-sm">
                                                     <div>{{ $member->user->name }}</div>
                                                 </div>
                                             @endforeach
@@ -134,14 +129,14 @@ on([
             <x-lightbox />
         @endpush
         @script
-        <script>
-            $wire.on('procedure-updated', () => {
-                Success.fire('Prosedur berhasil diupdate')
-            });
-            $wire.on('procedure-fails', () => {
-                Success.fire('Prosedur gagal diupdate')
-            });
-        </script>
+            <script>
+                $wire.on('procedure-updated', () => {
+                    Success.fire('Prosedur berhasil diupdate')
+                });
+                $wire.on('procedure-fails', () => {
+                    Success.fire('Prosedur gagal diupdate')
+                });
+            </script>
         @endscript
     @endvolt
 </x-layouts.app>

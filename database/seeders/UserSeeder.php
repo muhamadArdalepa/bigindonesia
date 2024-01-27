@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Poin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -17,9 +18,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $role_marketer = Role::create(['name' => 'Marketer']);
         $role_karyawan = Role::create(['name' => 'Karyawan']);
+        $role_marketer = Role::create(['name' => 'Marketer']);
+        $role_teknisi = Role::create(['name' => 'Teknisi']);
+        $role_asset = Role::create(['name' => 'Asset']);
+        $role_admin = Role::create(['name' => 'Admin']);
+        
+        
         $role_super_admin = Role::create(['name' => 'Super Admin']);
+        
         $role_supervisor = Role::create(['name' => 'Supervisor']);
 
         $super_admin = User::create([
@@ -41,6 +48,21 @@ class UserSeeder extends Seeder
         ]);
         $marketer->assignRole($role_karyawan);
         $marketer->assignRole($role_marketer);
+
+        $teknisi = User::create([
+            'name' => 'Saya Teknisi',
+            'email' => 'teknisi@big.com',
+            'password' => '123123',
+            'region_id' => 2,
+            'phone' => '6281234567890',
+        ]);
+        $teknisi->assignRole($role_karyawan);
+        $teknisi->assignRole($role_teknisi);
+
+        Poin::create([
+            'user_id'=>$teknisi->id,
+            'period'=>now()->startOfMonth()
+        ]);
 
         $buhar = User::create([
             'name' => 'Budi Hartono',

@@ -19,11 +19,8 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->foreignId('user_id')
-                ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->string('picture')->default('aktivitas/dummy.jpg');
+            $table->tinyInteger('index');
+            $table->string('picture')->nullable();
             $table->string('coordinate');
             $table->string('address');
             $table->string('desc');

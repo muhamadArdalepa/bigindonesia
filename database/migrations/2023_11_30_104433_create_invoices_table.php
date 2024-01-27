@@ -21,7 +21,9 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->tinyInteger('type')->default(1);
             $table->double('total')->default(0);
-            $table->tinyInteger('status')->default(0);
+            $table->double('paid')->default(0);
+            $table->boolean('is_paid_off')->default(0);
+            $table->boolean('is_valid')->default(0);
             $table->string('desc')->nullable();
             $table->date('due_date')->nullable();
             $table->timestamps();

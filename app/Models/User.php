@@ -31,6 +31,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
     ];
+    protected $casts = [
+        'is_active' => 'boolean'
+    ];
+
 
 
     /**
@@ -53,6 +57,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function absens()
     {
         return $this->hasMany(Absen::class);
+    }
+    public function poins()
+    {
+        return $this->hasMany(Poin::class);
     }
     public function phone(): Attribute
     {

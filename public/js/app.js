@@ -7019,7 +7019,7 @@ const ms = Swal.mixin({
     vh = ms.mixin({
         icon: "warning",
         customClass: {
-            confirmButton: "btn btn-primary mx-1",
+            confirmButton: "btn btn-dark mx-1",
             cancelButton: "btn btn-light mx-1",
         },
         showCancelButton: !0,

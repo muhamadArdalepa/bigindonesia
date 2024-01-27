@@ -15,6 +15,8 @@ class Order extends Model
     protected $guarded = [];
     public $incrementing = false;
 
+    const POIN = 3;
+
 
     // relationship
     public function marketer(): BelongsTo

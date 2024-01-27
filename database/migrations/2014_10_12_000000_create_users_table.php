@@ -24,6 +24,9 @@ return new class extends Migration
                 ->onUpdate('cascade');
             $table->string('phone');
             $table->string('picture')->default('picture/profile/dummy.avif');
+            $table->boolean('isActive')->default(false);
+            $table->boolean('isLate')->default(false);
+            $table->boolean('isPlace')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

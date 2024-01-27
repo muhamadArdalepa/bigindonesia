@@ -59,3 +59,8 @@ document.addEventListener("livewire:navigated", () => {
         });
     });
 });
+
+function copyText(text, context) {
+    navigator.clipboard.writeText(text);
+    Success.fire(context + ' berhasil disalin!')
+}

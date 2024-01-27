@@ -9,6 +9,9 @@
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
     height: calc(100% - 32px - 24px - 24px - 1px) !important;
 }
+.link.link-lined{
+    text-decoration: underline !important;
+}
 ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
@@ -166,4 +169,25 @@ table .freeze {
         width: 10rem ;
         height: 10rem ;
     }
+}
+
+.camera-button{
+    position: relative;
+    width: 4rem;
+    height: 4rem;
+    margin-top: -5rem;
+    margin-bottom: 1rem;
+    z-index: 2;
+    background-color: #fff4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+}
+
+.content-middle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

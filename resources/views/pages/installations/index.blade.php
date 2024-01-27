@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Order;
+use App\Models\Installation;
 use function Livewire\Volt\{usesPagination, on, computed, state};
 
 usesPagination();
@@ -8,25 +8,15 @@ usesPagination();
 state(['search' => '']);
 
 $orders = computed(
-    fn() => Order::with('customer')
-        ->whereHas('customer', fn($query) => $query->where('name', 'LIKE', "%$this->search%"))
-        ->latest()
+    fn() => Installation::latest()
         ->paginate(5),
 );
-on(['order-created' => fn() => ($this->orders = $this->orders)]);
 ?>
 <x-layouts.app>
     @volt
         <div class="card">
             <div class="card-header p-3 p-md-4 pb-0">
-                <h6 class="m-0">List Penjualan</h6>
-                @can('create-order')
-                    <a href="#Modal" class="btn btn-dark" data-bs-toggle="modal">
-                        <x-i-btn-content reverse gap="2" icon="fa-solid fa-plus">
-                            Tambah Penjualan
-                        </x-i-btn-content>
-                    </a>
-                @endrole
+                <h5 class="m-0">List Penjualan</h5>
             </div>
             <div class="card-body p-3 p-md-4">
                 <input type="search" wire:model.live="search" class="form-control form-control-sm">
@@ -40,12 +30,12 @@ on(['order-created' => fn() => ($this->orders = $this->orders)]);
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($this->orders as $order)
-                                <tr id="tr{{ $order->id }}">
-                                    <td>{{ $order->id }}</td>
-                                    <td>{{ $order->customer->name }}</td>
+                            @foreach ($this->installations as $installation)
+                                <tr>
+                                    <td>{{ $installation->id }}</td>
+                                    <td>{{ $installation->customer->name }}</td>
                                     <td class="freeze">
-                                        <a href="{{ url('orders/' . $order->id) }}" class="btn btn-sm btn-dark"
+                                        <a href="{{ url('installations/' . $order->id) }}" class="btn btn-sm btn-dark"
                                             wire:navigate.hover>
                                             <x-i-btn-content icon="fa-solid fa-arrow-up-right-from-square">
                                                 Detail
@@ -61,9 +51,4 @@ on(['order-created' => fn() => ($this->orders = $this->orders)]);
             </div>
         </div>
     @endvolt
-    @can('create-order')
-        @push('modal')
-            <x-orders.modal />
-        @endpush
-    @endcan
 </x-layouts.app>

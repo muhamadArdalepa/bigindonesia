@@ -14,16 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->primary();
             $table->foreignId('customer_id')
                 ->constrained()
                 ->onDelete('restrict')
                 ->onUpdate('cascade');
-            $table->foreignId('user_id')
-                ->constrained()
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
-            $table->string('desc');
+            $table->foreignId('cs_id')->constrained('users')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreignId('noc_id')->nullable()->constrained('users')->nullOnDelete()->onUpdate('cascade');
+            $table->enum('report_type',['Gangguan', 'Ganti Password', 'Pemutusan', 'Pindah Alamat', 'Lainnya']);
+            $table->enum('disrupt_type',['Tidak Konek', 'Redaman Tinggi', 'LOS','Lainnya'])->nullable();
+            $table->string('pictures')->nullable();
+            $table->string('desc')->nullable();
             $table->tinyInteger('status');
         });
     }
