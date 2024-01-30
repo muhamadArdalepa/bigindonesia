@@ -240,7 +240,7 @@ $setAddress = fn($address) => ($this->address = $address);
                         <input type="text" class="form-control" wire:model.live="desc" placeholder="Keterangan...">
                         @if ($picture && $desc && $coordinate && $address)
                             <button class="btn btn-dark btn-lg mt-3 w-100" wire:click="save" wire:loading.attr="disabled" wire:target="save">
-                                <span class="spinner-border spinner-border-sm"></span>
+                                <span class="spinner-border spinner-border-sm" wire:loading wire:target="save"></span>
                                 Absen
                             </button>
                         @endif

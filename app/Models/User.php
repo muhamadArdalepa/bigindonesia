@@ -58,6 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Absen::class);
     }
+    public function absen_details()
+    {
+        return $this->hasManyThrough(AbsenDetail::class,Absen::class,'user_id','absen_id');
+        // return $this->hasManyThrough(Absen::class,AbsenDetail::class,'absen_id','user_id');
+    }
     public function poins()
     {
         return $this->hasMany(Poin::class);

@@ -41,22 +41,25 @@ $add_picture = function () {
     $this->picture = [];
 };
 
-
-
 $submit = function () {
     if ($this->report_type == 'Gangguan') {
         $this->validate([
                 'pictures' => 'array',
                 'pictures.*' => 'image',
-                'pictures.*' => 'image',
                 'desc' => 'required'
         ]);
         $this->add_picture();
+       
+    }
+    try {
+        DB::beginTransaction();
         $filenames = '';
         if (count($this->pictures) > 0) {
             $manager = new ImageManager(new Driver());
-            foreach ($this->pictures as $picture) {
-                $filename = 'installations/' . Str::kebab($this->data->title) . '/' . Str::random(1) . '/' . Str::random(32) . '.jpeg';
+            foreach ($this->pictures as $i => $picture) {
+                $filename = 'reports/'. Str::random(1) . '/' . Str::random(32) . '.jpeg';
+                if($i != 0) $filenames .= '~';
+                $filenames .= $filename;
                 $encoded = $manager
                     ->read($picture)
                     ->scaleDown(width: 1080)
@@ -64,20 +67,35 @@ $submit = function () {
                 Storage::disk('private')->put($filename, $encoded);
             }
         }
+        $last_id = Report::whereDate('created_at', now())->latest()->pluck('id')->first();
+
+        if ($last_id) {
+            $last_id = str_split($last_id, 9);
+            $report_id = 'R' . date('Ymd') . str_pad((int) $last_id[1] + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $report_id = 'R' . date('Ymd') . '001';
+        }
+
         Report::create([
+            'id' => $report_id,
             'customer_id'=>$this->customer->id,
             'cs_id'=>auth()->user()->id,
             'report_type'=>$this->report_type,
+            'pictures' => $filenames,
+            'desc' => $this->desc,
+            'status' => 0
         ]);
-    }
-    try {
-        DB::beginTransaction();
-
         DB::commit();
-        $this->dispatch('order-created');
-        $this->reset();
+        $this->dispatch('fire-success');
+        $this->customer = null;
+        $this->search = null;
+        $this->report_type = $this->report_types[0];
+        $this->pictures = [];
+        $this->picture = [];
+        $this->desc = null;
     } catch (\Throwable $th) {
-        $this->dispatch('order-failed', errors: $th->getMessage());
+        dd($th->getMessage());
+        $this->dispatch('fire-failed', errors: $th->getMessage());
     }
 };
 
@@ -134,15 +152,17 @@ $submit = function () {
                     {{-- memiliki picture --}}
                     @if( in_array($report_type,['Gangguan','Lainnya']))
                     <div class="form-floating has-validation">
-                        <input type="text" wire:model="desc" class="form-control @error('desc') is-invalid @enderror" placeholder="desc">
+                        <input type="text" wire:model="desc" class="form-control @error('desc') is-invalid @enderror"
+                            placeholder="desc">
                         <label>Keterangan</label>
                         <div class="invalid-feedback ps-2 text-xs">
                             @error('desc')
-                                {{ $message }}
+                            {{ $message }}
                             @enderror
                         </div>
                     </div>
-                    <input type="file" class="d-none" accept="image/*" wire:model.change="picture" x-ref="picture" multiple>
+                    <input type="file" class="d-none" accept="image/*" wire:model.change="picture" x-ref="picture"
+                        multiple>
                     <label class="mb-0 ms-3">Gambar (Opsional)</label>
                     <div class="flex-wrap d-flex">
                         @foreach ($pictures as $pictures_val)
@@ -155,20 +175,19 @@ $submit = function () {
                         </div>
                         @endforeach
                         @if ($picture)
-                            @foreach($picture as $pics)
-                            <div class="p-2 w-50" style="height: 10rem">
-                                <div class="rounded-3 overflow-hidden h-100">
-                                    <img @click="$dispatch('lightbox','{{ $pics->temporaryUrl() }}')"
-                                        src="{{ $pics->temporaryUrl() }}"
-                                        style="height: 100%;width: 100%;object-fit: cover">
-                                </div>
+                        @foreach($picture as $pics)
+                        <div class="p-2 w-50" style="height: 10rem">
+                            <div class="rounded-3 overflow-hidden h-100">
+                                <img @click="$dispatch('lightbox','{{ $pics->temporaryUrl() }}')"
+                                    src="{{ $pics->temporaryUrl() }}"
+                                    style="height: 100%;width: 100%;object-fit: cover">
                             </div>
-                            @endforeach
+                        </div>
+                        @endforeach
                         @endif
                         <div class="p-2 w-50" style="height: 10rem">
                             <div class="border rounded-3 d-flex flex-column align-items-center justify-content-center h-100"
-                                @click="$wire.add_picture(); $refs.picture.click()"
-                                wire:target="picture">
+                                @click="$wire.add_picture(); $refs.picture.click()" wire:target="picture">
                                 <i class="fa-solid fa-image fa-lg"></i>
                             </div>
                         </div>

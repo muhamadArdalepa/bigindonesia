@@ -23,9 +23,10 @@ return new class extends Migration
             $table->foreignId('noc_id')->nullable()->constrained('users')->nullOnDelete()->onUpdate('cascade');
             $table->enum('report_type',['Gangguan', 'Ganti Password', 'Pemutusan', 'Pindah Alamat', 'Lainnya']);
             $table->enum('disrupt_type',['Tidak Konek', 'Redaman Tinggi', 'LOS','Lainnya'])->nullable();
-            $table->string('pictures')->nullable();
+            $table->text('pictures')->nullable();
             $table->string('desc')->nullable();
             $table->tinyInteger('status');
+            $table->timestamps();
         });
     }
 

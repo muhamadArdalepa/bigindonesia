@@ -99,7 +99,6 @@ $submit = function () {
         $this->dispatch('order-created');
         $this->reset();
     } catch (\Throwable $th) {
-        DB::rollBack();
         if (Storage::disk('private')->exists($validated['ktp_picture'])) {
             Storage::disk('private')->delete($validated['ktp_picture']);
         }

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PacketSeeder::class,
             AbsenPlaceSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

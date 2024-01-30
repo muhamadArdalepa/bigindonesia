@@ -17,7 +17,6 @@ class Order extends Model
 
     const POIN = 3;
 
-
     // relationship
     public function marketer(): BelongsTo
     {
