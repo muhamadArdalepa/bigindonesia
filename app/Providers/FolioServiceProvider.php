@@ -20,10 +20,9 @@ class FolioServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        auth()->loginUsingId(3);
-        Folio::path(resource_path('views/pages/g'))
-            ->middleware(['guest']);
-        Folio::path(resource_path('views/pages'))
-            ->middleware(['auth']);
+        Folio::route(resource_path('views/pages'),middleware:[
+            'a/*' => ['auth','agent'],
+            'g/*' => ['guest']
+        ]);
     }
 }

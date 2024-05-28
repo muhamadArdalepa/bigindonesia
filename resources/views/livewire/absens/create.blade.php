@@ -14,10 +14,11 @@ state([
     'absen' => fn() => $this->absen,
     'index' => function () {
         foreach ($this->absen::times as $i => $time) {
-            if ($time >= now()->format('H:i')) {
+            if ($time >= date('H:i')) {
                 return $i - 1;
             }
         }
+        return 3;
     },
     'whichAbsen' => fn()=> ['Pertama', 'Kedua', 'Ketiga', 'Keempat'][$this->index],
     'isIphone' => strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone'),
@@ -27,10 +28,6 @@ state([
     'desc',
     'stream',
 ]);
-
-mount(function () {
-    // dd($this->index);
-});
 
 $save = function () {
     $filename = 'absens/' . auth()->user()->id . '/' . Str::random(1) . '/' . Str::random(64) . uniqid() . '.jpeg';
@@ -56,7 +53,7 @@ $save = function () {
 
         if ($this->whichAbsen == 'Pertama') {
             auth()->user()->isActive = true;
-            auth()->user()->isLate = now()->format('H:i') > $this->absen::late ? 1 : 0;
+            auth()->user()->isLate = date('H:i') > $this->absen::late ? 1 : 0;
             auth()
                 ->user()
                 ->save();
@@ -79,7 +76,6 @@ $save = function () {
         DB::commit();
         $this->dispatch('absen-success');
     } catch (\Throwable $th) {
-        dd($th->getMessage());
         $this->dispatch('absen-fails');
     }
 };

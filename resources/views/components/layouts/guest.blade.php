@@ -14,20 +14,11 @@
     @stack('css')
 </head>
 
-<body class="g-sidenav-show">
+<body>
 
-    <div class="min-height-300 bg-danger position-fixed top-0 w-100"></div>
-    <div class="position-relative overflow-hidden d-flex vh-100 w-100">
-        <x-sidenav />
-        <main class="position-relative main-content overflow-auto w-100">
-            <x-topnav />
-            <div class="px-2 px-md-4 mb-4">
-                {{ $slot }}
-            </div>
-            <x-footer />
-        </main>
-    </div>
-    <script defer data-navigate-once src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    <main class="content-middle vh-100 w-100 bg-light p-3">
+        {{ $slot }}
+    </main>
     <script data-navigate-once src="{{ asset('js/before.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/app.js') }}"></script>
     <script data-navigate-once src="{{ asset('js/custom.js') }}"></script>

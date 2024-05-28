@@ -8,6 +8,7 @@ state([
     'Y' => date('Y'),
     'status' => ['success', 'warning', 'danger'],
     'temp' => 1,
+    'absen_id',
 ]);
 
 $N = computed(
@@ -31,20 +32,25 @@ $analytics = computed(function () {
         'a' => $absen->where('status', 3)->count(),
     ];
 });
+$setAbsenId = function ($id) {
+    $this->absen_id = $id;
+};
 
+on([
+    'setnull' => fn() => $this->absen_id = null
+]);
 ?>
 <div>
     @volt
-        <div class="card mt-4" x-data="{ selected: null }">
+        <div class="card mt-4">
             <div class="card-header flex-wrap">
                 <h5 class="m-0 flex-grow-1">
                     Rekap Bulanan
                 </h5>
                 <div class="flex-grow-1 d-flex gap-3">
-                    <select class="form-select" wire:model.change="n" @change="$wire.$refresh()">
+                    <select class="form-select" wire:model.change="n">
                         @for ($i = 1; $i <= 12; $i++)
-                            <option value="{{ $i }}">{{ Carbon::create()->month($i)->format('F') }}
-                            </option>
+                            <option value="{{ $i }}">{{ Carbon::create()->month($i)->format('F') }}</option>
                         @endfor
                     </select>
                     <select class="form-select" wire:model.change="Y">
@@ -68,7 +74,6 @@ $analytics = computed(function () {
                         </tr>
                     </thead>
                     <tbody>
-
                         @for ($i = 0; $i < $this->week; $i++)
                             <tr>
                                 @for ($j = 0; $j < 7; $j++)
@@ -78,12 +83,9 @@ $analytics = computed(function () {
                                         @if ($temp <= $this->N)
                                             @if ($absen = auth()->user()->absens()->whereDate('created_at', "$Y-$n-$temp")->first())
                                                 <td class="py-4 px-0 text-sm text-center text-white bg-gradient-{{ $absen->created_at->isToday() && (date('H:i') >= Absen::times[0] && date('H:i') < Absen::max)
-                                                    ? $status[auth()->user()->isActive ? (auth()->user()->isLate ? 0 : 1) : 2]
-                                                    : $status[$absen->status - 1] }}"
-                                                    data-bs-toggle="modal" data-bs-target="#detailModal"
-                                                    @click="selected = {{ $absen->id }}">
-                                                    <span
-                                                        class="p-1 rounded-1 {{ Carbon::createFromFormat('Y/n/j', "$Y/$n/$temp")->isToday() ? 'bg-gradient-primary text-white' : '' }}">
+                                                    ? $status[auth()->user()->isActive ? (auth()->user()->isLate ? 1 : 0) : 2]
+                                                    : $status[$absen->status - 1] }}" wire:click="setAbsenId({{$absen->id}})" data-bs-toggle="modal" data-bs-target="#absenDetailModal">
+                                                    <span class="p-1 rounded-1 {{ Carbon::createFromFormat('Y/n/j', "$Y/$n/$temp")->isToday() ? 'bg-gradient-primary text-white' : '' }}">
                                                         {{ $temp }}
                                                     </span>
                                                 </td>
@@ -120,7 +122,7 @@ $analytics = computed(function () {
                     </div>
                 </div>
             </div>
-            <x-absens.modal />
+            <livewire:absens.modal :absen_id="$absen_id" />
         </div>
     @endvolt
 </div>

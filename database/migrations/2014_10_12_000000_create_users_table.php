@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('isActive')->default(false);
             $table->boolean('isLate')->default(false);
             $table->boolean('isPlace')->default(true);
+            $table->boolean('isIdle')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

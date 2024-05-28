@@ -9,16 +9,20 @@ use function Livewire\Volt\{computed, on, state};
 
 state([
     'report' => fn() => $report,
-    'disrupt_types' => ['Tidak Konek', 'Redaman Tinggi', 'LOS','Lainnya'];
-    'disrupt_types' => $this->disrupt;
+    'disrupt_types' => ['Tidak Konek', 'Redaman Tinggi', 'LOS','Lainnya'],
+    'disrupt_type' => fn()=> $this->disrupt_types[0],
+    'desc',
 ]);
 
 $submit = function () {
-    $this->validate();
+    $this->validate([
+        'disrupt_type' => 'required',
+        'desc' => 'nullable|max:255'
+    ]);
 
     try {
         DB::beginTransaction();
-
+         
         DB::commit();
         $this->dispatch('fire-success');
     } catch (\Throwable $th) {
@@ -32,7 +36,7 @@ $submit = function () {
         <div class="modal-dialog modal-sm modal-dialog-scrollable">
             <div class="modal-content  overflow-visible">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Verifikasi Calon User</h1>
+                    <h1 class="modal-title fs-5">Identifikasi Gangguan</h1>
                     <span class="p-2 cursor-pointer" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fa-solid fa-xmark"> </i>
                     </span>
@@ -40,15 +44,24 @@ $submit = function () {
                 <div class="modal-body  overflow-visible">
                     <form wire:submit.prevent="submit">
                         <div class="form-floating has-validation">
-                            <select id="status" class="form-select @error('status') is-invalid @enderror"
-                                wire:model.change="status">
-                                <option value="1">Tercover</option>
-                                <option value="2">Tidak Tercover</option>
-                                <option value="3">Tarik Jalur</option>
+                            <select class="form-select @error('disrupt_type') is-invalid @enderror"
+                                wire:model="disrupt_type">
+                                @foreach ($disrupt_types as $type)
+                                    <option value="{{$type}}">{{$type}}</option>
+                                @endforeach
                             </select>
-                            <label for="status">Status</label>
+                            <label>Jenis Gangguan</label>
                             <div class="invalid-feedback ps-2 text-xs">
-                                @error('status')
+                                @error('disrupt_type')
+                                    {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-floating has-validation">
+                            <input type="text" wire:model="desc" class="form-control @error('desc') is-invalid @enderror" placeholder="desc">
+                            <label>Keterangan (opsional)</label>
+                            <div class="invalid-feedback ps-2 text-xs">
+                                @error('desc')
                                     {{ $message }}
                                 @enderror
                             </div>

@@ -58,7 +58,7 @@ on(['report-created' => fn() => ($this->reports = $this->reports)]);
                                     <td>{{ $report->created_at->translatedFormat('H:i') }}</td>
                                     <td>{{ ['Menunggu','Open','Proses','Done','Cancel'][$report->status] }}</td>
                                     <td class="freeze">
-                                        <a href="{{ url('reports/' . $report->id) }}" class="btn btn-sm btn-dark"
+                                        <a href="{{ url('/a/reports/' . $report->id) }}" class="btn btn-sm btn-dark"
                                             wire:navigate.hover>
                                             <x-i-btn-content icon="fa-solid fa-arrow-up-right-from-square">
                                                 Detail
